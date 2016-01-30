@@ -1,6 +1,16 @@
 <template name="home">
-  <span>Hello!!</span>
-
-
-
+  <div>
+    <span>Hello!!</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        {{#each allObjects}}
+          <td>
+            {{this}}
+          </td>
+        {{/each}}
+      </tr>
+    </table>
+  </div>
 </template>
