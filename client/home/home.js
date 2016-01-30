@@ -3,5 +3,3 @@ Template.home.helpers({
 		return AllObjects;
 	}
 });
-
-//TODO on destroy remove player?
