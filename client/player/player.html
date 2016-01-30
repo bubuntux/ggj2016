@@ -2,5 +2,15 @@
   <div>
     <span>Hello!! player </span>
   </div>
-
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        {{#each myObjects}}
+          <td>
+            {{this}}
+          </td>
+        {{/each}}
+      </tr>
+    </table>
+  </div>
 </template>
