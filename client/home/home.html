@@ -5,10 +5,12 @@
   <div class="table-responsive">
     <table class="table">
       <tr>
-        {{#each allObjects}}
-          <td>
-            {{this}}
-          </td>
+        {{#each allItems}}
+          {{#each this}}
+            <td>
+              {{this}}
+            </td>
+          {{/each}}
         {{/each}}
       </tr>
     </table>

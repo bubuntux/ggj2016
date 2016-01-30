@@ -1,5 +1,5 @@
 Template.home.helpers({
-	allObjects: function () {
-		return AllObjects;
+	allItems: function () {
+		return _.values(Items);
 	}
 });

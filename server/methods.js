@@ -1,5 +1,5 @@
 Meteor.methods({
-	add: function (game, player) {
-		Games.update({id: game.id}, {$push: {players: player}, $pullAll: {objects: player.objects}});
+	createPlayer: function (player) {
+		Players.upsert({id: player.id}, player);
 	}
 });
