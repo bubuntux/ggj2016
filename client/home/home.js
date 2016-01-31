@@ -10,11 +10,13 @@ function addWaitingForPlayerText(stage) {
 
 Template.home.onRendered(function () {
 	let stages = {};
+	createjs.Ticker.setFPS(1); //TODO remove
 	_.each(Contexts, function (context) {
 		let stage = new createjs.Stage(context);
 		stages[context] = stage;
 		addWaitingForPlayerText(stage);
 		stage.update();
+		createjs.Ticker.addEventListener("tick", stage); //TODO remove
 	});
 
 	let artifacts = this.data.artifacts;
