@@ -70,8 +70,8 @@ Template.home.onRendered(function () {
 				bitmap.x = artifact.x;
 				bitmap.y = artifact.y;
 				//container.addChild(bitmap);
-				bitmap.regX = bitmap.image.width / 5;
-				bitmap.regY = bitmap.image.height / 5;
+				//bitmap.regX = bitmap.image.width / 5;
+				//bitmap.regY = bitmap.image.height / 5;
 				//bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
 
 				//let shape = new createjs.Shape(); //TODO change for images

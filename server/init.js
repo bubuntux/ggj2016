@@ -21,7 +21,7 @@ Meteor.startup(function () {
 
 		///Present
 		{name: 'Mueble2', context: Contexts[1], x: 550, y: 140},
-		{name: 'Libros', context: Contexts[1], x: 550, y: 118},
+		{name: 'libros', context: Contexts[1], x: 550, y: 118},
 		{name: 'Guitarra', context: Contexts[1], x: 470, y: 200},
 		{name: 'MiniClima', context: Contexts[1], x: 423, y: 42},
 		{name: 'TVPresente', context: Contexts[1], x: 314, y: 103},
@@ -40,9 +40,9 @@ Meteor.startup(function () {
 		{name: 'mochila', context: Contexts[2], x: 467, y: 198},
 		{name: 'Palo', context: Contexts[2], x: 432, y: 204},
 		{name: 'cantinflora', context: Contexts[2], x: 166, y: 217},
-		{name: 'Mesa23', context: Contexts[2], x: 29, y: 179},
+		{name: 'Mesa', context: Contexts[2], x: 29, y: 179},
 		{name: 'Pistola', context: Contexts[2], x: 13, y: 157},
-		{name: 'guantes', context: Contexts[2], x: 36, y: 157}/*,
+		/*{name: 'guantes', context: Contexts[2], x: 36, y: 157},
 		{name: 'Botas', context: Contexts[2], x: 102, y: 20},
 		{name: 'botiquin', context: Contexts[2], x: 124, y: 40},
 		{name: 'Molotov', context: Contexts[2], x: 124, y: 40},

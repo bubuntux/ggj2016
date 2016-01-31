@@ -36,11 +36,12 @@ Template.player.onRendered(function () {
 //		image.onload = handleImageLoad;
 
 		bitmap = new createjs.Bitmap(image);
+			bitmap.name = artifact.name;
 		bitmap.x = artifact.x;
 		bitmap.y = artifact.y;
 		//container.addChild(bitmap);
-		bitmap.regX = bitmap.image.width / 5;
-		bitmap.regY = bitmap.image.height / 5;
+		//bitmap.regX = bitmap.image.width / 5;
+		//bitmap.regY = bitmap.image.height / 5;
 		//bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
 
 		bitmap.cursor = "pointer";
