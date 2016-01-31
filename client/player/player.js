@@ -25,6 +25,8 @@ Template.player.onRendered(function () {
 		bitmap.y = artifact.y;
 		bitmap.regX = 20;
 		bitmap.regY = 20;
+
+
 		//bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
 
 		stage.addChild(bitmap);
@@ -33,6 +35,8 @@ Template.player.onRendered(function () {
 		bitmap.on("pressmove", function (evt) {
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
+console.log("x= " + artifact.x + " y " + artifact.y);
+
 			Meteor.call('moveArtifact', artifact);
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
