@@ -10,6 +10,7 @@ Template.player.onRendered(function () {
 	createjs.Ticker.addEventListener("tick", stage); //TODO remove
 
 	let drop = new createjs.Shape();
+	drop.name = 'drop';
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
 	stage.update();
@@ -48,7 +49,9 @@ Template.player.onRendered(function () {
 			 }*/
 		});
 		bitmap.on("pressup", function (evt) {
-			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
+			if (_.find(stage.getObjectsUnderPoint(evt.stageX, evt.stageY), function (child) {
+					return child.name === 'drop';
+				})) {
 				/*	Meteor.call('selectArtifact', artifact);
 				 player.selected = artifact;*/
 			} else {
@@ -60,16 +63,6 @@ Template.player.onRendered(function () {
 				Meteor.call('moveArtifact', artifact);
 			}
 		});
-
-		/*bitmap.on("rollover", function (evt) {
-		 this.scaleX = this.scaleY = this.scale * 1.2;
-		 stage.update();
-		 });
-
-		 bitmap.on("rollout", function (evt) {
-		 this.scaleX = this.scaleY = this.scale / 1.2;
-		 stage.update();
-		 });*/
 
 	});
 	this.data.artifacts.forEach(function (artifact) {
