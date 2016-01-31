@@ -32,6 +32,11 @@ Template.home.onRendered(function () {
 				evt.target.x = evt.stageX;
 				evt.target.y = evt.stageY;
 			});
+			shape.on("pressup", function (evt) {
+				if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
+					alert('Wow'); //TODO
+				}
+			});
 		});
 
 	});
