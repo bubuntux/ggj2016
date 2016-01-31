@@ -20,6 +20,7 @@ Template.player.onRendered(function () {
 	preload.addEventListener('fileload', function (s) {
 		let artifact = s.item.id;
 		let bitmap = new createjs.Bitmap(s.item.src);
+		bitmap.name = artifact.name;
 		bitmap.x = artifact.x;
 		bitmap.y = artifact.y;
 		bitmap.regX = 20;
@@ -36,24 +37,24 @@ Template.player.onRendered(function () {
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
 			stage.update();
-			/*if (player.selected) {
-			 player.selected.x = player.selected.defX;
-			 player.selected.y = player.selected.defY;
-			 Meteor.call('moveArtifact', player.selected);
-			 var child = stage.getChildByName(player.selected.name); //TODO wtf??
-			 child.x = player.selected.defX;
-			 child.y = player.selected.defY;
-			 stage.update();
-			 Meteor.call('deselectArtifact');
-			 delete player.selected;
-			 }*/
+			if (player.selected) {
+				player.selected.x = player.selected.defX;
+				player.selected.y = player.selected.defY;
+				Meteor.call('moveArtifact', player.selected);
+				var child = stage.getChildByName(player.selected.name);
+				child.x = player.selected.defX;
+				child.y = player.selected.defY;
+				stage.update();
+				Meteor.call('deselectArtifact');
+				delete player.selected;
+			}
 		});
 		bitmap.on("pressup", function (evt) {
 			if (_.find(stage.getObjectsUnderPoint(evt.stageX, evt.stageY), function (child) {
 					return child.name === 'drop';
 				})) {
-				/*	Meteor.call('selectArtifact', artifact);
-				 player.selected = artifact;*/
+				Meteor.call('selectArtifact', artifact);
+				player.selected = artifact;
 			} else {
 				bitmap.x = artifact.defX;
 				bitmap.y = artifact.defY;
