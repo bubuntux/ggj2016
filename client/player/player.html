@@ -1,3 +1,83 @@
 <template name="player">
-  <canvas id="canvas" width="550" height="250" style=" margin-left:50px; margin-top:10px; position: absolute;"></canvas>
+	  <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+  <nav id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+      <li class="sidebar-brand">
+        <a href="#top" onclick='$("#menu-close").click();'>Paper Room</a>
+      </li>
+
+      <li>
+        <a href="#game" onclick='$("#menu-close").click();'>Game</a>
+      </li>
+      <li>
+        <a>
+          {{> loginButtons}}
+        </a>
+      </li>
+    </ul>
+  </nav>
+ <section id="game" class="portfolio" style="padding:0px">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>Paper Story</h2>
+
+          <div id="Chuy">
+
+  <canvas id="canvas" width="550" height="250" ></canvas>
+
+          </div>
+
+
+          <style>
+
+            #Chuy {
+              background-color: red;
+              height: 620px;
+              width: 1370px;
+              margin-left: -58px;
+            }
+          </style>
+
+        </div>
+        <!-- /.col-lg-10 -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
+  </section>
+ 
+  <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function (e) {
+      e.preventDefault();
+      $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#sidebar-wrapper").toggleClass("active");
+    });
+
+    // Scrolls to the selected menu item on the page
+    $(function () {
+      $('a[href*=#]:not([href=#])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+          if (target.length) {
+            $('html,body').animate({
+              scrollTop: target.offset().top
+            }, 1000);
+            return false;
+          }
+        }
+      });
+    });
+
+    </script>
+
 </template>
