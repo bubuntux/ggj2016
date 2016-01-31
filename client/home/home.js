@@ -5,17 +5,20 @@ Template.home.helpers({
 });
 
 Template.home.onRendered(function () {
-	var stage = new createjs.Stage('canvas');
 
-	//TODO only for players?
+	/*//TODO only for players?
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('white').drawRect(400, 600, 50, 50);
 	stage.addChild(drop);
 	//TODO only for players?
+*/
+
+	createjs.Ticker.setFPS(30); //TODO 60 ?
 
 	_.each(_.keys(Items), function (item) {
+		var stage = new createjs.Stage(item);
 
-		let color = 'red';
+		let color = 'red'; //TODO remove later or something..
 		if (item === 'present') {
 			color = 'blue';
 		} else if (item === 'future') {
@@ -42,10 +45,8 @@ Template.home.onRendered(function () {
 			});
 		});
 
+		createjs.Touch.enable(stage);
+		createjs.Ticker.addEventListener("tick", stage);
 	});
 
-
-	createjs.Touch.enable(stage);
-	createjs.Ticker.setFPS(30); //TODO 60 ?
-	createjs.Ticker.addEventListener("tick", stage);
 });
