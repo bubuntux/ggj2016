@@ -18,7 +18,8 @@ Template.player.onRendered(function () {
 		color = 'green';
 	}
 
-	_.each(this.data.items.arr, function (item) {
+	let items = this.data.items.arr;
+	_.each(items, function (item) {
 		let shape = new createjs.Shape();
 		shape.x = item.pos.x;
 		shape.y = item.pos.y;
@@ -27,7 +28,9 @@ Template.player.onRendered(function () {
 		shape.on("pressmove", function (evt) {
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
-			//TODO send update
+			item.pos.x = evt.stageX;
+			item.pos.y = evt.stageY;
+			Meteor.call('move', items);
 		});
 		shape.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
