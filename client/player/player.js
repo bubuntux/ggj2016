@@ -3,6 +3,9 @@ Template.player.onRendered(function () {
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
 
+	createjs.Ticker.setFPS(1); //TODO remove
+	createjs.Ticker.addEventListener("tick", stage); //TODO remove
+
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
@@ -20,6 +23,9 @@ Template.player.onRendered(function () {
 		bitmap.regY = 20;
 		//bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
 
+		stage.addChild(bitmap);
+		stage.update();
+
 		bitmap.on("pressmove", function (evt) {
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
@@ -27,7 +33,7 @@ Template.player.onRendered(function () {
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
 			stage.update();
-			if (player.selected) {
+			/*if (player.selected) {
 				player.selected.x = player.selected.defX;
 				player.selected.y = player.selected.defY;
 				Meteor.call('moveArtifact', player.selected);
@@ -37,12 +43,12 @@ Template.player.onRendered(function () {
 				stage.update();
 				Meteor.call('deselectArtifact');
 				delete player.selected;
-			}
+			}*/
 		});
 		bitmap.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
-				Meteor.call('selectArtifact', artifact);
-				player.selected = artifact;
+			/*	Meteor.call('selectArtifact', artifact);
+				player.selected = artifact;*/
 			} else {
 				bitmap.x = artifact.defX;
 				bitmap.y = artifact.defY;
@@ -63,8 +69,6 @@ Template.player.onRendered(function () {
 		 stage.update();
 		 });*/
 
-		stage.addChild(bitmap);
-		stage.update();
 	});
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(1);
