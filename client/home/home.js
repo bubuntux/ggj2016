@@ -35,6 +35,9 @@ Template.home.onRendered(function () {
 			shape.on("pressup", function (evt) {
 				if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
 					alert('Wow'); //TODO
+				} else {
+					shape.x = i.pos.x;
+					shape.y = i.pos.y;
 				}
 			});
 		});
