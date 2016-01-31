@@ -25,12 +25,12 @@ Template.player.onRendered(function () {
 		stage.addChild(shape);
 		stage.update();
 		shape.on("pressmove", function (evt) {
-			evt.target.x = evt.stageX;
-			evt.target.y = evt.stageY;
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
-			stage.update();
 			Meteor.call('moveArtifact', artifact);
+			evt.target.x = evt.stageX;
+			evt.target.y = evt.stageY;
+			stage.update();
 		});
 		shape.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
