@@ -17,7 +17,8 @@ Template.home.onRendered(function () {
 		stage.update();
 	});
 
-	this.data.artifacts.observe({
+	let artifacts = this.data.artifacts;
+	artifacts.observe({
 		changed: function (artifact) {
 			let stage = stages[artifact.context];
 			let child = stage.getChildByName(artifact.name);
@@ -27,7 +28,8 @@ Template.home.onRendered(function () {
 		}
 	});
 
-	let self = this; //TODO stupid js (change for ecma5)
+	let selectedArtifactsByPlayer = {};
+
 	this.data.players.observe({
 		added: function (player) {
 			let stage = stages[player.context];
@@ -41,7 +43,7 @@ Template.home.onRendered(function () {
 				stage.removeChild(oldText);
 			}
 
-			self.data.artifacts.forEach(function (artifact) {
+			artifacts.forEach(function (artifact) {
 				if (artifact.context != player.context) {
 					return;
 				}
@@ -68,6 +70,21 @@ Template.home.onRendered(function () {
 			stage.removeAllChildren();
 			addWaitingForPlayerText(stage);
 			stage.update();
+		},
+		changed: function (player) {
+			selectedArtifactsByPlayer[player.userId] = player.selected;
+			let selectedArtifacts = _.values(selectedArtifactsByPlayer);
+			if (_.every(selectedArtifacts, function (artifact) {
+					return !!artifact;
+				})) {
+				if (_.every(selectedArtifacts, function (artifact) {
+						return artifact.required;
+					})) {
+					alert('Won');
+				} else {
+					alert('lose');
+				}
+			}
 		}
 	});
 
