@@ -30,7 +30,7 @@ Template.player.onRendered(function () {
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
 			stage.update();
-			Meteor.call('move', artifact);
+			Meteor.call('moveArtifact', artifact);
 		});
 		shape.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
@@ -41,7 +41,7 @@ Template.player.onRendered(function () {
 				artifact.x = artifact.defX;
 				artifact.y = artifact.defY;
 				stage.update();
-				Meteor.call('move', artifact);
+				Meteor.call('moveArtifact', artifact);
 			}
 		});
 	});
