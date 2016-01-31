@@ -4,7 +4,6 @@ Template.player.onRendered(function () {
 	createjs.Touch.enable(stage);
 
 
-
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
@@ -23,7 +22,7 @@ Template.player.onRendered(function () {
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(10);
 		stage.mouseMoveOutside = true;
-var bitmap;
+		var bitmap;
 		//var container = new createjs.Container();
 		//stage.addChild(container);
 
@@ -31,20 +30,20 @@ var bitmap;
 		//	shape.x = i.pos.x;
 		//	shape.y = i.pos.y;
 
-					var image = new Image();
-						image.src = "/image/"+ artifact.context +"/"+artifact.name+".png";
+		var image = new Image();
+		image.src = "/image/" + artifact.context + "/" + artifact.name + ".png";
 		//image.src = "/image/daisy.png";
 //		image.onload = handleImageLoad;
 
-			bitmap = new createjs.Bitmap(image);
-			bitmap.x = artifact.x;
-			bitmap.y = artifact.y;
-			//container.addChild(bitmap);
-			bitmap.regX = bitmap.image.width / 5;
-			bitmap.regY = bitmap.image.height / 5;
-			bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
+		bitmap = new createjs.Bitmap(image);
+		bitmap.x = artifact.x;
+		bitmap.y = artifact.y;
+		//container.addChild(bitmap);
+		bitmap.regX = bitmap.image.width / 5;
+		bitmap.regY = bitmap.image.height / 5;
+		//bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
 
-			bitmap.cursor = "pointer";
+		bitmap.cursor = "pointer";
 
 		//shape.cache(0, 0, 15, 15); //TODO adjust with image
 
@@ -82,15 +81,17 @@ var bitmap;
 		});
 
 
-			bitmap.on("rollover", function (evt) {
-				this.scaleX = this.scaleY = this.scale * 1.2;
-			});
+		bitmap.on("rollover", function (evt) {
+			this.scaleX = this.scaleY = this.scale * 1.2;
+			stage.update();
+		});
 
-			bitmap.on("rollout", function (evt) {
-					this.scaleX = this.scaleY = this.scale / 1.2;
-			});
+		bitmap.on("rollout", function (evt) {
+			this.scaleX = this.scaleY = this.scale / 1.2;
+			stage.update();
+		});
 
-					stage.addChild(bitmap);
+		stage.addChild(bitmap);
 		stage.update();
 	});
 });
