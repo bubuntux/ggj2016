@@ -70,12 +70,12 @@ Template.player.onRendered(function () {
 
 	});
 
+	preload.loadFile({id: 'drop', src: "/image/cofre.jpg"});
+
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(1);
 		stage.mouseMoveOutside = true;
 
 		preload.loadFile({id: artifact, src: "/image/" + artifact.context + "/" + artifact.name + ".png"});
 	});
-
-	preload.loadFile({id: 'drop', src: "/image/cofre.jpg"});
 });
