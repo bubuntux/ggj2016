@@ -7,6 +7,7 @@ function addWaitingForPlayerText(stage) {
 	text.y = (stage.canvas.height / 2) - 50;
 	stage.addChild(text);
 }
+
 Template.home.onRendered(function () {
 	let stages = {};
 	_.each(Contexts, function (context) {
