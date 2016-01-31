@@ -21,6 +21,7 @@ Template.player.onRendered(function () {
 		shape.x = artifact.x;
 		shape.y = artifact.y;
 		shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
+		shape.cache(0, 0, 15, 15); //TODO adjust with image
 		stage.addChild(shape);
 		stage.update();
 		shape.on("pressmove", function (evt) {

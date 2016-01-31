@@ -20,6 +20,7 @@ Template.home.onRendered(function () {
 			shape.x = artifact.x;
 			shape.y = artifact.y;
 			shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
+			shape.cache(0, 0, 15, 15); //TODO adjust with image
 			let stage = stages[artifact.context];
 			stage.addChild(shape);
 			stage.update();
