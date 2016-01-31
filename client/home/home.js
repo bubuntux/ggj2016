@@ -1,6 +1,6 @@
 "use strict";
 Template.home.onRendered(function () {
-	createjs.Ticker.setFPS(30); //TODO 60 ?
+	createjs.Ticker.setFPS(60); //TODO 60 ?
 
 	let stages = {};
 	stages['present'] = new createjs.Stage('present');
@@ -33,6 +33,16 @@ Template.home.onRendered(function () {
 		},
 		removed: function (player) {
 			stages[player.items.name].removeAllChildren();
+		},
+		changed: function (newPlayer) {
+			let time = newPlayer.items.name;
+			let stage = stages[time];
+			_.forEach(newPlayer.items.arr, function (item) {
+				var shape = stage.getChildByName(item.name);
+				shape.x = item.pos.x;
+				shape.y = item.pos.y;
+			});
+
 		}
 	});
 

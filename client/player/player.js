@@ -10,7 +10,8 @@ Template.player.onRendered(function () {
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
 
-	let time = this.data.items.name;
+	let items = this.data.items;
+	let time = items.name;
 	let color = 'red'; //TODO remove later or something..
 	if (time === 'present') {
 		color = 'blue';
@@ -18,8 +19,7 @@ Template.player.onRendered(function () {
 		color = 'green';
 	}
 
-	let items = this.data.items.arr;
-	_.each(items, function (item) {
+	_.each(items.arr, function (item) {
 		let shape = new createjs.Shape();
 		shape.x = item.pos.x;
 		shape.y = item.pos.y;
@@ -36,8 +36,11 @@ Template.player.onRendered(function () {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
 				alert('Wow'); //TODO
 			} else {
-				shape.x = item.pos.x;
-				shape.y = item.pos.y;
+				shape.x = item.defPos.x;
+				shape.y = item.defPos.y;
+				item.pos.x = item.defPos.x;
+				item.pos.y = item.defPos.y;
+				Meteor.call('move', items);
 			}
 		});
 	});
