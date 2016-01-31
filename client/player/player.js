@@ -3,49 +3,22 @@ Template.player.onRendered(function () {
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
 
-
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
 	stage.update();
 
-	let context = this.data.player.context;
-	let color = 'red'; //TODO remove later or something..
-	if (context === 'present') {
-		color = 'blue';
-	} else if (context === 'future') {
-		color = 'green';
-	}
-
 	let player = this.data.player;
 
-	this.data.artifacts.forEach(function (artifact) {
-		stage.enableMouseOver(10);
-		stage.mouseMoveOutside = true;
-		var bitmap;
-		//var container = new createjs.Container();
-		//stage.addChild(container);
-
-		//	let shape = new createjs.Shape();
-		//	shape.x = i.pos.x;
-		//	shape.y = i.pos.y;
-
-		var image = new Image();
-		image.src = "/image/" + artifact.context + "/" + artifact.name + ".png";
-		//image.src = "/image/daisy.png";
-//		image.onload = handleImageLoad;
-
-		bitmap = new createjs.Bitmap(image);
+	var preload = new createjs.LoadQueue();
+	preload.addEventListener('fileload', function (s) {
+		let artifact = s.item.id;
+		let bitmap = new createjs.Bitmap(s.item.src);
 		bitmap.x = artifact.x;
 		bitmap.y = artifact.y;
-		//container.addChild(bitmap);
-		bitmap.regX = bitmap.image.width / 5;
-		bitmap.regY = bitmap.image.height / 5;
-		//bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
-
-		bitmap.cursor = "pointer";
-
-		//shape.cache(0, 0, 15, 15); //TODO adjust with image
+		bitmap.regX = 20;
+		bitmap.regY = 20;
+		//bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
 
 		bitmap.on("pressmove", function (evt) {
 			artifact.x = evt.stageX;
@@ -55,15 +28,15 @@ Template.player.onRendered(function () {
 			evt.target.y = evt.stageY;
 			stage.update();
 			if (player.selected) {
-				var child = stage.getChildByName(player.selected.name);
 				player.selected.x = player.selected.defX;
 				player.selected.y = player.selected.defY;
 				Meteor.call('moveArtifact', player.selected);
+				var child = stage.getChildByName(player.selected.name); //TODO wtf??
 				child.x = player.selected.defX;
 				child.y = player.selected.defY;
+				stage.update();
 				Meteor.call('deselectArtifact');
 				delete player.selected;
-				stage.update();
 			}
 		});
 		bitmap.on("pressup", function (evt) {
@@ -80,18 +53,23 @@ Template.player.onRendered(function () {
 			}
 		});
 
+		/*bitmap.on("rollover", function (evt) {
+		 this.scaleX = this.scaleY = this.scale * 1.2;
+		 stage.update();
+		 });
 
-		bitmap.on("rollover", function (evt) {
-			this.scaleX = this.scaleY = this.scale * 1.2;
-			stage.update();
-		});
-
-		bitmap.on("rollout", function (evt) {
-			this.scaleX = this.scaleY = this.scale / 1.2;
-			stage.update();
-		});
+		 bitmap.on("rollout", function (evt) {
+		 this.scaleX = this.scaleY = this.scale / 1.2;
+		 stage.update();
+		 });*/
 
 		stage.addChild(bitmap);
 		stage.update();
+	});
+	this.data.artifacts.forEach(function (artifact) {
+		stage.enableMouseOver(1);
+		stage.mouseMoveOutside = true;
+
+		preload.loadFile({id: artifact, src: "/image/" + artifact.context + "/" + artifact.name + ".png"});
 	});
 });

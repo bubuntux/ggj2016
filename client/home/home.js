@@ -47,39 +47,19 @@ Template.home.onRendered(function () {
 				if (artifact.context != player.context) {
 					return;
 				}
-				let color = 'red'; //TODO remove ( when adding images )
-				if (artifact.context === 'present') {
-					color = 'blue';
-				} else if (artifact.context === 'future') {
-					color = 'green';
-				}
 
-				var bitmap;
-				//var container = new createjs.Container();
-				//stage.addChild(container);
-
-				//	let shape = new createjs.Shape();
-				//	shape.x = i.pos.x;
-				//	shape.y = i.pos.y;
-
-				var image = new Image();
+				let image = new Image();
 				image.src = "/image/" + artifact.context + "/" + artifact.name + ".png";
 
-				bitmap = new createjs.Bitmap(image);
+				let bitmap = new createjs.Bitmap(image);
 				bitmap.name = artifact.name;
 				bitmap.x = artifact.x;
 				bitmap.y = artifact.y;
-				//container.addChild(bitmap);
+
 				bitmap.regX = bitmap.image.width / 5;
 				bitmap.regY = bitmap.image.height / 5;
-				//bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
+				bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
 
-				//let shape = new createjs.Shape(); //TODO change for images
-				//shape.name = artifact.name;
-				//shape.x = artifact.x;
-				//shape.y = artifact.y;
-				//shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
-				//bitmap.cache(0, 0, 15, 15); //TODO adjust with image
 				let stage = stages[artifact.context];
 				stage.addChild(bitmap);
 			});
