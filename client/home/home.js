@@ -4,6 +4,16 @@ Template.home.helpers({
 	}
 });
 
+<<<<<<< HEAD
+	Template.home.onRendered(function(){
+		var canvas = document.getElementById("canvas");
+		var stage = new createjs.Stage(canvas);
+
+		
+
+		stage.update();
+	});
+=======
 Template.home.onRendered(function () {
 	var stage = new createjs.Stage('canvas');
 
@@ -42,3 +52,4 @@ Template.home.onRendered(function () {
 	createjs.Ticker.setFPS(30); //TODO 60 ?
 	createjs.Ticker.addEventListener("tick", stage);
 });
+>>>>>>> refs/remotes/origin/master
