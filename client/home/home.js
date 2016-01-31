@@ -21,14 +21,13 @@ Template.home.onRendered(function () {
 			} else if (time === 'future') {
 				color = 'green';
 			}
-			let items = player.items;
-			_.each(items.arr, function (item) {
+			_.each(player.items.arr, function (item) {
 				let shape = new createjs.Shape();
 				shape.name = item.name;
 				shape.x = item.pos.x;
 				shape.y = item.pos.y;
 				shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
-				stages[items.name].addChild(shape);
+				stages[time].addChild(shape);
 			});
 		},
 		removed: function (player) {
