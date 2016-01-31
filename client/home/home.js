@@ -2,9 +2,7 @@
 Template.home.onRendered(function () {
 	let stages = {};
 	_.each(Contexts, function (context) {
-		let stage = new createjs.Stage(context);
-		stages[context] = stage;
-		createjs.Touch.enable(stage);
+		stages[context] = new createjs.Stage(context);
 	});
 
 	this.data.artifacts.observe({
