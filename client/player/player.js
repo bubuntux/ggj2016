@@ -1,5 +1,8 @@
 "use strict";
 Template.player.onRendered(function () {
+	let player = this.data.player;
+	$('#canvas').css('background-image', 'url(/image/' + player.context + '.jpg)');
+
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
 
@@ -11,7 +14,6 @@ Template.player.onRendered(function () {
 	stage.addChild(drop);
 	stage.update();
 
-	let player = this.data.player;
 
 	var preload = new createjs.LoadQueue();
 	preload.addEventListener('fileload', function (s) {
@@ -34,21 +36,21 @@ Template.player.onRendered(function () {
 			evt.target.y = evt.stageY;
 			stage.update();
 			/*if (player.selected) {
-				player.selected.x = player.selected.defX;
-				player.selected.y = player.selected.defY;
-				Meteor.call('moveArtifact', player.selected);
-				var child = stage.getChildByName(player.selected.name); //TODO wtf??
-				child.x = player.selected.defX;
-				child.y = player.selected.defY;
-				stage.update();
-				Meteor.call('deselectArtifact');
-				delete player.selected;
-			}*/
+			 player.selected.x = player.selected.defX;
+			 player.selected.y = player.selected.defY;
+			 Meteor.call('moveArtifact', player.selected);
+			 var child = stage.getChildByName(player.selected.name); //TODO wtf??
+			 child.x = player.selected.defX;
+			 child.y = player.selected.defY;
+			 stage.update();
+			 Meteor.call('deselectArtifact');
+			 delete player.selected;
+			 }*/
 		});
 		bitmap.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
-			/*	Meteor.call('selectArtifact', artifact);
-				player.selected = artifact;*/
+				/*	Meteor.call('selectArtifact', artifact);
+				 player.selected = artifact;*/
 			} else {
 				bitmap.x = artifact.defX;
 				bitmap.y = artifact.defY;
