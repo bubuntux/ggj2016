@@ -3,6 +3,8 @@ Template.player.onRendered(function () {
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
 
+
+
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
@@ -19,15 +21,34 @@ Template.player.onRendered(function () {
 	let player = this.data.player;
 
 	this.data.artifacts.forEach(function (artifact) {
-		let shape = new createjs.Shape();
-		shape.name = artifact.name;
-		shape.x = artifact.x;
-		shape.y = artifact.y;
-		shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
-		shape.cache(0, 0, 15, 15); //TODO adjust with image
-		stage.addChild(shape);
-		stage.update();
-		shape.on("pressmove", function (evt) {
+		stage.enableMouseOver(10);
+		stage.mouseMoveOutside = true; 
+var bitmap;
+		//var container = new createjs.Container();
+		//stage.addChild(container);
+
+		//	let shape = new createjs.Shape();
+		//	shape.x = i.pos.x;
+		//	shape.y = i.pos.y;
+		
+					var image = new Image();
+						image.src = "/image/"+ artifact.context +"/"+artifact.name+".png";
+		//image.src = "/image/daisy.png";
+//		image.onload = handleImageLoad;
+
+			bitmap = new createjs.Bitmap(image);
+			bitmap.x = artifact.x;
+			bitmap.y = artifact.y;
+			//container.addChild(bitmap);
+			bitmap.regX = bitmap.image.width / 5;
+			bitmap.regY = bitmap.image.height / 5;
+			bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
+			
+			bitmap.cursor = "pointer";
+
+		//shape.cache(0, 0, 15, 15); //TODO adjust with image
+
+		bitmap.on("pressmove", function (evt) {
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
 			Meteor.call('moveArtifact', artifact);
@@ -46,18 +67,30 @@ Template.player.onRendered(function () {
 				stage.update();
 			}
 		});
-		shape.on("pressup", function (evt) {
+		bitmap.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
 				Meteor.call('selectArtifact', artifact);
 				player.selected = artifact;
 			} else {
-				shape.x = artifact.defX;
-				shape.y = artifact.defY;
+				bitmap.x = artifact.defX;
+				bitmap.y = artifact.defY;
 				artifact.x = artifact.defX;
 				artifact.y = artifact.defY;
 				stage.update();
 				Meteor.call('moveArtifact', artifact);
 			}
 		});
+
+
+			bitmap.on("rollover", function (evt) {
+				this.scaleX = this.scaleY = this.scale * 1.2;
+			});
+
+			bitmap.on("rollout", function (evt) {
+					this.scaleX = this.scaleY = this.scale;
+			});
+
+					stage.addChild(bitmap);
+		stage.update();
 	});
 });

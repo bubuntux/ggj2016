@@ -53,14 +53,35 @@ Template.home.onRendered(function () {
 				} else if (artifact.context === 'future') {
 					color = 'green';
 				}
-				let shape = new createjs.Shape(); //TODO change for images
-				shape.name = artifact.name;
-				shape.x = artifact.x;
-				shape.y = artifact.y;
-				shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
-				shape.cache(0, 0, 15, 15); //TODO adjust with image
+
+							var bitmap;
+		//var container = new createjs.Container();
+		//stage.addChild(container);
+
+		//	let shape = new createjs.Shape();
+		//	shape.x = i.pos.x;
+		//	shape.y = i.pos.y;
+		
+			var image = new Image();
+			image.src = "/image/"+ artifact.context +"/"+artifact.name+".png";
+
+			bitmap = new createjs.Bitmap(image);
+			bitmap.name = artifact.name;
+			bitmap.x = artifact.x;
+			bitmap.y = artifact.y;
+			//container.addChild(bitmap);
+			bitmap.regX = bitmap.image.width / 5;
+			bitmap.regY = bitmap.image.height / 5;
+			bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
+
+				//let shape = new createjs.Shape(); //TODO change for images
+				//shape.name = artifact.name;
+				//shape.x = artifact.x;
+				//shape.y = artifact.y;
+				//shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
+				//bitmap.cache(0, 0, 15, 15); //TODO adjust with image
 				let stage = stages[artifact.context];
-				stage.addChild(shape);
+				stage.addChild(bitmap);
 			});
 
 			stage.update();
