@@ -1,5 +1,6 @@
+"use strict";
 Meteor.methods({
 	createPlayer: function (player) {
-		Players.upsert({id: player.id}, player);
+		Players.upsert({userId: player.userId}, player);
 	}
 });

@@ -1,48 +1,37 @@
 "use strict";
 Template.home.onRendered(function () {
-	createjs.Ticker.setFPS(60);
+	createjs.Ticker.setFPS(60); //TODO remove
 
 	let stages = {};
-	stages['present'] = new createjs.Stage('present');
-	stages['past'] = new createjs.Stage('past');
-	stages['future'] = new createjs.Stage('future');
-
-	_.each(_.values(stages), function (stage) {
+	_.each(Contexts, function (context) {
+		let stage = new createjs.Stage(context);
+		stages[context] = stage;
 		createjs.Touch.enable(stage);
-		createjs.Ticker.addEventListener("tick", stage);
+		createjs.Ticker.addEventListener("tick", stage); //TODO remove
 	});
 
-	this.data.observe({
-		added: function (player) {
-			let time = player.items.name;
-
-			let color = 'red'; //TODO remove later or something..
-			if (time === 'present') {
+	this.data.artifacts.observe({
+		added: function (artifact) {
+			let color = 'red'; //TODO remove ( when adding images )
+			if (artifact.context === 'present') {
 				color = 'blue';
-			} else if (time === 'future') {
+			} else if (artifact.context === 'future') {
 				color = 'green';
 			}
-			_.each(player.items.arr, function (item) {
-				let shape = new createjs.Shape();
-				shape.name = item.name;
-				shape.x = item.pos.x;
-				shape.y = item.pos.y;
-				shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
-				stages[time].addChild(shape);
-			});
+			let shape = new createjs.Shape(); //TODO change for images
+			shape.name = artifact.name;
+			shape.x = artifact.x;
+			shape.y = artifact.y;
+			shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
+			stages[artifact.context].addChild(shape);
 		},
-		removed: function (player) {
-			stages[player.items.name].removeAllChildren();
+		removed: function (artifact) {
+			stages[artifact.context].removeAllChildren();
 		},
-		changed: function (newPlayer) {
-			let time = newPlayer.items.name;
-			let stage = stages[time];
-			_.forEach(newPlayer.items.arr, function (item) {
-				var shape = stage.getChildByName(item.name);
-				shape.x = item.pos.x;
-				shape.y = item.pos.y;
-			});
-
+		changed: function (artifact) {
+			let child = stages[artifact.context].getChildByName(artifact.name);
+			child.x = artifact.x;
+			child.y = artifact.y;
 		}
 	});
 
