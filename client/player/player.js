@@ -22,7 +22,7 @@ Template.player.onRendered(function () {
 
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(10);
-		stage.mouseMoveOutside = true; 
+		stage.mouseMoveOutside = true;
 var bitmap;
 		//var container = new createjs.Container();
 		//stage.addChild(container);
@@ -30,7 +30,7 @@ var bitmap;
 		//	let shape = new createjs.Shape();
 		//	shape.x = i.pos.x;
 		//	shape.y = i.pos.y;
-		
+
 					var image = new Image();
 						image.src = "/image/"+ artifact.context +"/"+artifact.name+".png";
 		//image.src = "/image/daisy.png";
@@ -43,7 +43,7 @@ var bitmap;
 			bitmap.regX = bitmap.image.width / 5;
 			bitmap.regY = bitmap.image.height / 5;
 			bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
-			
+
 			bitmap.cursor = "pointer";
 
 		//shape.cache(0, 0, 15, 15); //TODO adjust with image
@@ -87,7 +87,7 @@ var bitmap;
 			});
 
 			bitmap.on("rollout", function (evt) {
-					this.scaleX = this.scaleY = this.scale;
+					this.scaleX = this.scaleY = this.scale / 1.2;
 			});
 
 					stage.addChild(bitmap);

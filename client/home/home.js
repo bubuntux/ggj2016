@@ -54,25 +54,25 @@ Template.home.onRendered(function () {
 					color = 'green';
 				}
 
-							var bitmap;
-		//var container = new createjs.Container();
-		//stage.addChild(container);
+				var bitmap;
+				//var container = new createjs.Container();
+				//stage.addChild(container);
 
-		//	let shape = new createjs.Shape();
-		//	shape.x = i.pos.x;
-		//	shape.y = i.pos.y;
-		
-			var image = new Image();
-			image.src = "/image/"+ artifact.context +"/"+artifact.name+".png";
+				//	let shape = new createjs.Shape();
+				//	shape.x = i.pos.x;
+				//	shape.y = i.pos.y;
 
-			bitmap = new createjs.Bitmap(image);
-			bitmap.name = artifact.name;
-			bitmap.x = artifact.x;
-			bitmap.y = artifact.y;
-			//container.addChild(bitmap);
-			bitmap.regX = bitmap.image.width / 5;
-			bitmap.regY = bitmap.image.height / 5;
-			bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
+				var image = new Image();
+				image.src = "/image/" + artifact.context + "/" + artifact.name + ".png";
+
+				bitmap = new createjs.Bitmap(image);
+				bitmap.name = artifact.name;
+				bitmap.x = artifact.x;
+				bitmap.y = artifact.y;
+				//container.addChild(bitmap);
+				bitmap.regX = bitmap.image.width / 5;
+				bitmap.regY = bitmap.image.height / 5;
+				bitmap.scaleX = bitmap.scaleY = bitmap.scale = 0.1;
 
 				//let shape = new createjs.Shape(); //TODO change for images
 				//shape.name = artifact.name;
@@ -95,7 +95,7 @@ Template.home.onRendered(function () {
 		changed: function (player) {
 			selectedArtifactsByPlayer[player.userId] = player.selected;
 			let selectedArtifacts = _.values(selectedArtifactsByPlayer);
-			if (_.every(selectedArtifacts, function (artifact) {
+			if (selectedArtifacts.length >= 3 && _.every(selectedArtifacts, function (artifact) {
 					return !!artifact;
 				})) {
 				if (_.every(selectedArtifacts, function (artifact) {
