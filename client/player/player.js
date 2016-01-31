@@ -1,6 +1,6 @@
 "use strict";
 Template.player.onRendered(function () {
-	createjs.Ticker.setFPS(30); //TODO 60 ?
+	createjs.Ticker.setFPS(60);
 
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
@@ -24,6 +24,7 @@ Template.player.onRendered(function () {
 		shape.x = item.pos.x;
 		shape.y = item.pos.y;
 		shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
+		//shape.cache(-20, -20, 40, 40);
 		stage.addChild(shape);
 		shape.on("pressmove", function (evt) {
 			evt.target.x = evt.stageX;

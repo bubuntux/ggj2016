@@ -1,6 +1,6 @@
 "use strict";
 Template.home.onRendered(function () {
-	createjs.Ticker.setFPS(60); //TODO 60 ?
+	createjs.Ticker.setFPS(60);
 
 	let stages = {};
 	stages['present'] = new createjs.Stage('present');
