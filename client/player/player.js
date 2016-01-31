@@ -1,14 +1,12 @@
 "use strict";
 Template.player.onRendered(function () {
-	createjs.Ticker.setFPS(60); //TODO remove
-
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
-	createjs.Ticker.addEventListener("tick", stage); //TODO remove
 
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
+	stage.update();
 
 	let context = this.data.player.context;
 	let color = 'red'; //TODO remove later or something..
@@ -24,11 +22,13 @@ Template.player.onRendered(function () {
 		shape.y = artifact.y;
 		shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
 		stage.addChild(shape);
+		stage.update();
 		shape.on("pressmove", function (evt) {
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
 			artifact.x = evt.stageX;
 			artifact.y = evt.stageY;
+			stage.update();
 			Meteor.call('move', artifact);
 		});
 		shape.on("pressup", function (evt) {
@@ -39,6 +39,7 @@ Template.player.onRendered(function () {
 				shape.y = artifact.defY;
 				artifact.x = artifact.defX;
 				artifact.y = artifact.defY;
+				stage.update();
 				Meteor.call('move', artifact);
 			}
 		});

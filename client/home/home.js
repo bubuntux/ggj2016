@@ -1,13 +1,10 @@
 "use strict";
 Template.home.onRendered(function () {
-	createjs.Ticker.setFPS(60); //TODO remove
-
 	let stages = {};
 	_.each(Contexts, function (context) {
 		let stage = new createjs.Stage(context);
 		stages[context] = stage;
 		createjs.Touch.enable(stage);
-		createjs.Ticker.addEventListener("tick", stage); //TODO remove
 	});
 
 	this.data.artifacts.observe({
@@ -23,15 +20,21 @@ Template.home.onRendered(function () {
 			shape.x = artifact.x;
 			shape.y = artifact.y;
 			shape.graphics.beginFill(color).drawRect(0, 0, 15, 15);
-			stages[artifact.context].addChild(shape);
+			let stage = stages[artifact.context];
+			stage.addChild(shape);
+			stage.update();
 		},
 		removed: function (artifact) {
-			stages[artifact.context].removeAllChildren();
+			let stage = stages[artifact.context];
+			stage.removeAllChildren();
+			stage.update();
 		},
 		changed: function (artifact) {
-			let child = stages[artifact.context].getChildByName(artifact.name);
+			let stage = stages[artifact.context];
+			let child = stage.getChildByName(artifact.name);
 			child.x = artifact.x;
 			child.y = artifact.y;
+			stage.update();
 		}
 	});
 
