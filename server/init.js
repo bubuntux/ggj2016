@@ -40,7 +40,7 @@ Meteor.startup(function () {
 		{name: 'mochila', context: Contexts[2], x: 467, y: 198},
 		{name: 'Palo', context: Contexts[2], x: 432, y: 204},
 		{name: 'cantinflora', context: Contexts[2], x: 166, y: 217},
-		{name: 'Mesa', context: Contexts[2], x: 29, y: 179},
+		{name: 'Mesa2', context: Contexts[2], x: 29, y: 179},
 		{name: 'Pistola', context: Contexts[2], x: 13, y: 157},
 		/*{name: 'guantes', context: Contexts[2], x: 36, y: 157}/*,
 		{name: 'Botas', context: Contexts[2], x: 102, y: 20},

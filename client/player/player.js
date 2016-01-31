@@ -9,15 +9,18 @@ Template.player.onRendered(function () {
 	createjs.Ticker.setFPS(1); //TODO remove
 	createjs.Ticker.addEventListener("tick", stage); //TODO remove
 
-	let drop = new createjs.Shape();
-	drop.name = 'drop';
-	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
-	stage.addChild(drop);
-	stage.update();
-
-
 	var preload = new createjs.LoadQueue();
 	preload.addEventListener('fileload', function (s) {
+		if (s.item.id === 'drop') {
+			let cofre = new createjs.Bitmap(s.item.src);
+			cofre.name = 'drop';
+			cofre.x = 250;
+			cofre.y = 200;
+			stage.addChild(cofre);
+			stage.update();
+			return;
+		}
+
 		let artifact = s.item.id;
 		let bitmap = new createjs.Bitmap(s.item.src);
 		bitmap.name = artifact.name;
@@ -70,10 +73,13 @@ console.log("x= " + artifact.x + " y " + artifact.y);
 		});
 
 	});
+
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(1);
 		stage.mouseMoveOutside = true;
 
 		preload.loadFile({id: artifact, src: "/image/" + artifact.context + "/" + artifact.name + ".png"});
 	});
+
+	preload.loadFile({id: 'drop', src: "/image/cofre.jpg"});
 });
