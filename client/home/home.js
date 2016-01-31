@@ -43,27 +43,29 @@ Template.home.onRendered(function () {
 				stage.removeChild(oldText);
 			}
 
-			artifacts.forEach(function (artifact) {
-				if (artifact.context != player.context) {
-					return;
-				}
+			var preload = new createjs.LoadQueue();
+			preload.addEventListener('fileload', function (s) {
+				let artifact = s.item.id;
 
-				let image = new Image();
-				image.src = "/image/" + artifact.context + "/" + artifact.name + ".png";
-
-				let bitmap = new createjs.Bitmap(image);
+				let bitmap = new createjs.Bitmap(s.item.src);
 				bitmap.name = artifact.name;
 				bitmap.x = artifact.x;
 				bitmap.y = artifact.y;
 
-				bitmap.regX = bitmap.image.width / 5;
-				bitmap.regY = bitmap.image.height / 5;
-				bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
+				bitmap.regX = 20;
+				bitmap.regY = 20;
+				//bitmap.cache(-bitmap.regX, -bitmap.regY, bitmap.regX, bitmap.regY);
 
 				let stage = stages[artifact.context];
 				stage.addChild(bitmap);
+				stage.update();
 			});
-
+			artifacts.forEach(function (artifact) {
+				if (artifact.context != player.context) {
+					return;
+				}
+				preload.loadFile({id: artifact, src: "/image/" + artifact.context + "/" + artifact.name + ".png"});
+			});
 			stage.update();
 		},
 		removed: function (player) {
