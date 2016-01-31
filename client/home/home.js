@@ -4,23 +4,12 @@ Template.home.helpers({
 	}
 });
 
-<<<<<<< HEAD
-	Template.home.onRendered(function(){
-		var canvas = document.getElementById("canvas");
-		var stage = new createjs.Stage(canvas);
-
-		
-
-		stage.update();
-	});
-=======
 Template.home.onRendered(function () {
 	var stage = new createjs.Stage('canvas');
 
-
 	//TODO only for players?
 	let drop = new createjs.Shape();
-	drop.graphics.beginFill('white').drawRect(400, 350, 50, 50);
+	drop.graphics.beginFill('white').drawRect(400, 600, 50, 50);
 	stage.addChild(drop);
 	//TODO only for players?
 
@@ -52,4 +41,3 @@ Template.home.onRendered(function () {
 	createjs.Ticker.setFPS(30); //TODO 60 ?
 	createjs.Ticker.addEventListener("tick", stage);
 });
->>>>>>> refs/remotes/origin/master
