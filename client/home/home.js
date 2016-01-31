@@ -5,17 +5,25 @@ Template.home.helpers({
 });
 
 Template.home.onRendered(function () {
-	var canvas = document.getElementById("canvas");
+	var stage = new createjs.Stage('canvas');
 
-	var stage = new createjs.Stage(canvas);
+	_.each(_.keys(Items), function (item) {
 
-	var text = new createjs.Text("Hello World!", "36px Arial", "#777");
-	text.textAlign = "center";
+		let color = 'red';
+		if (item === 'present') {
+			color = 'blue';
+		} else if (item === 'future') {
+			color = 'green';
+		}
 
-	stage.addChild(text);
+		_.each(Items[item], function (i) {
+			let shape = new createjs.Shape();
+			shape.graphics.beginFill(color).drawRect(i.pos.x, i.pos.y, 15, 15); //TODO change for images
+			stage.addChild(shape);
+		});
 
-	text.x = canvas.width / 2;
-	text.y = 180;
+	});
 
-	stage.update();
+	createjs.Ticker.setFPS(30); //TODO 60 ?
+	createjs.Ticker.addEventListener("tick", stage);
 });
