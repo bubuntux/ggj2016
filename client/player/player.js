@@ -1,47 +1,45 @@
 "use strict";
 Template.player.onRendered(function () {
-	createjs.Ticker.setFPS(60);
+	createjs.Ticker.setFPS(60); //TODO remove
 
 	let stage = new createjs.Stage('canvas');
 	createjs.Touch.enable(stage);
-	createjs.Ticker.addEventListener("tick", stage);
+	createjs.Ticker.addEventListener("tick", stage); //TODO remove
 
 	let drop = new createjs.Shape();
 	drop.graphics.beginFill('brown').drawRect(200, 200, 50, 50);
 	stage.addChild(drop);
 
-	let items = this.data.items;
-	let time = items.name;
+	let context = this.data.player.context;
 	let color = 'red'; //TODO remove later or something..
-	if (time === 'present') {
+	if (context === 'present') {
 		color = 'blue';
-	} else if (time === 'future') {
+	} else if (context === 'future') {
 		color = 'green';
 	}
 
-	_.each(items.arr, function (item) {
+	this.data.artifacts.forEach(function (artifact) {
 		let shape = new createjs.Shape();
-		shape.x = item.pos.x;
-		shape.y = item.pos.y;
+		shape.x = artifact.x;
+		shape.y = artifact.y;
 		shape.graphics.beginFill(color).drawRect(0, 0, 15, 15); //TODO change for images
-		//shape.cache(-20, -20, 40, 40);
 		stage.addChild(shape);
 		shape.on("pressmove", function (evt) {
 			evt.target.x = evt.stageX;
 			evt.target.y = evt.stageY;
-			item.pos.x = evt.stageX;
-			item.pos.y = evt.stageY;
-			Meteor.call('move', items);
+			artifact.x = evt.stageX;
+			artifact.y = evt.stageY;
+			Meteor.call('move', artifact);
 		});
 		shape.on("pressup", function (evt) {
 			if (stage.getObjectsUnderPoint(evt.stageX, evt.stageY).length >= 2) {
 				alert('Wow'); //TODO
 			} else {
-				shape.x = item.defPos.x;
-				shape.y = item.defPos.y;
-				item.pos.x = item.defPos.x;
-				item.pos.y = item.defPos.y;
-				Meteor.call('move', items);
+				shape.x = artifact.defX;
+				shape.y = artifact.defY;
+				artifact.x = artifact.defX;
+				artifact.y = artifact.defY;
+				Meteor.call('move', artifact);
 			}
 		});
 	});
