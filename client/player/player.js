@@ -70,7 +70,7 @@ Template.player.onRendered(function () {
 
 	});
 
-	preload.loadFile({id: 'drop', src: "/image/cofre.jpg"});
+	preload.loadFile({id: 'drop', src: "/image/cofre.png"});
 
 	this.data.artifacts.forEach(function (artifact) {
 		stage.enableMouseOver(1);
