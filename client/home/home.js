@@ -1,3 +1,4 @@
+"use strict";
 Template.home.onRendered(function () {
 	createjs.Ticker.setFPS(30); //TODO 60 ?
 
